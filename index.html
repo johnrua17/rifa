@@ -122,39 +122,6 @@
     <p>Responsable: John Andres Rua</p>
 </footer>
 
-<!-- <script>
-    const totalNumbers = 100;
-    const numbersGrid = document.getElementById('numbersGrid');
-
-    // Simulación de números vendidos
-    const vendidos = [3, 14, 25, 36, 47, 58, 69, 80, 91]; // Ejemplo de números vendidos
-
-    function createNumberElement(number) {
-        const numberElement = document.createElement('div');
-        numberElement.classList.add('number');
-        numberElement.textContent = number.toString().padStart(2, '0');
-
-        if (vendidos.includes(number)) {
-            numberElement.classList.add('vendido');
-            numberElement.textContent += " - Vendido";
-        } else {
-            numberElement.addEventListener('click', () => {
-                const whatsappNumber = '573185496440';
-                const message = `Me gustaría comprar el número ${number.toString().padStart(2, '0')} en la rifa del Xiaomi Redmi Note 13. Responsable: John Andres Rua.`;
-                const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-                window.open(url, '_blank');
-            });
-        }
-
-        numbersGrid.appendChild(numberElement);
-    }
-
-    // Crear números del 00 al 99
-    for (let i = 0; i < totalNumbers; i++) {
-        createNumberElement(i);
-    }
-</script> -->
-
 <script>
     // ID de la hoja de cálculo pública
     const spreadsheetId = '2PACX-1vThTKuJVZAd0rESx4cAIsURTml6ngaRQfqM0DA8Mu47BzNKDisct9N-DEAN--qnzhpT7d6ilPq0Jyrl';
@@ -163,17 +130,16 @@
     
     // Función para obtener los datos desde la hoja en formato CSV
     async function obtenerDatosDeLaHoja() {
-    try {
-        const response = await fetch(csvUrl);
-        const data = await response.text();
-        console.log(data);  // Para depuración, verifica los datos que llegan
-        const rows = data.split('\n').slice(1);  // Eliminar la fila de encabezados
-        const numeros = rows.map(row => row.split(','));
-        actualizarNumerosEnLaPagina(numeros);
-    } catch (error) {
-        console.error('Error al obtener datos de la hoja:', error);
+        try {
+            const response = await fetch(csvUrl);
+            const data = await response.text();
+            const rows = data.split('\n').slice(1);  // Eliminar la fila de encabezados
+            const numeros = rows.map(row => row.split(','));
+            actualizarNumerosEnLaPagina(numeros);
+        } catch (error) {
+            console.error('Error al obtener datos de la hoja:', error);
+        }
     }
-}
     
     // Función para actualizar los números en la página
     function actualizarNumerosEnLaPagina(numeros) {
@@ -186,13 +152,13 @@
             numberElement.classList.add('number');
             numberElement.textContent = numero.padStart(2, '0');
     
-            if (vendido.toLowerCase() === 'sí') {
+            if (vendido.toLowerCase() === 'si') {
                 numberElement.classList.add('vendido');
                 numberElement.textContent += " - Vendido";
             } else {
                 numberElement.addEventListener('click', () => {
                     const whatsappNumber = '573185496440';
-                    const message = `Me gustaría comprar el número ${numero} en la rifa del Xiaomi Redmi Note 13.`;
+                    const message = `Me gustaría comprar el número ${numero} en la rifa del Xiaomi Redmi Note 13. Responsable: John Andres Rua.`;
                     const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
                     window.open(url, '_blank');
                 });
@@ -204,7 +170,7 @@
     
     // Llamar a la función para obtener los datos al cargar la página
     obtenerDatosDeLaHoja();
-    </script>
+</script>
 
 </body>
 </html>
