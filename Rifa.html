@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rifa Xiaomi Redmi Note 13</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        header {
+            background-color: #6bffe1;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .product-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
+        .product-image {
+            flex: 1;
+            margin-right: 20px;
+        }
+        .product-image img {
+            max-width: 150px; /* Ajusta el tamaño aquí */
+            height: auto;
+            border-radius: 10px;
+        }
+        .product-details {
+            flex: 1;
+            text-align: left;
+        }
+        .numbers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 10px;
+        }
+        .number {
+            padding: 15px;
+            background-color: #4ECDC4;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        .number.vendido {
+            background-color: #FF6B6B;
+            cursor: not-allowed;
+        }
+        .number:hover:not(.vendido) {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        .description {
+            background-color: #f9f9f9;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Rifa Xiaomi Redmi Note 13 5G</h1>
+</header>
+
+<div class="container">
+    <div class="product-info">
+        <div class="product-image">
+            <img src="./xiaomi.jpg" alt="Xiaomi Redmi Note 13 5G">
+        </div>
+        <div class="product-details">
+            <h2>Características del Xiaomi Redmi Note 13 5G</h2>
+            <ul>
+                <li>Pantalla AMOLED de 6.67" con tasa de refresco de 120Hz</li>
+                <li>Procesador MediaTek Dimensity 6080</li>
+                <li>8GB de RAM</li>
+                <li>256GB de almacenamiento interno</li>
+                <li>Cámara principal de 108MP</li>
+                <li>Batería de 5000mAh con carga rápida de 33W</li>
+                <li>5G, WiFi 6, Bluetooth 5.3</li>
+                <li>MIUI 14 basado en Android 13</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="description">
+        <h2>Descripción del Producto</h2>
+        <p>¡Este Xiaomi Redmi Note 13 5G es completamente nuevo! Con 8GB de RAM y 256GB de almacenamiento, es ideal para quienes buscan un teléfono potente y con gran capacidad de almacenamiento. Su cámara de 108MP te permitirá capturar momentos increíbles, mientras que su batería de larga duración te mantendrá conectado todo el día. ¡Participa en la rifa y llévate este increíble dispositivo!</p>
+    </div>
+
+    <h2>Selecciona tu número</h2>
+    <div class="numbers-grid" id="numbersGrid"></div>
+</div>
+
+<footer>
+    <p>Responsable: John Andres Rua</p>
+</footer>
+
+<!-- <script>
+    const totalNumbers = 100;
+    const numbersGrid = document.getElementById('numbersGrid');
+
+    // Simulación de números vendidos
+    const vendidos = [3, 14, 25, 36, 47, 58, 69, 80, 91]; // Ejemplo de números vendidos
+
+    function createNumberElement(number) {
+        const numberElement = document.createElement('div');
+        numberElement.classList.add('number');
+        numberElement.textContent = number.toString().padStart(2, '0');
+
+        if (vendidos.includes(number)) {
+            numberElement.classList.add('vendido');
+            numberElement.textContent += " - Vendido";
+        } else {
+            numberElement.addEventListener('click', () => {
+                const whatsappNumber = '573185496440';
+                const message = `Me gustaría comprar el número ${number.toString().padStart(2, '0')} en la rifa del Xiaomi Redmi Note 13. Responsable: John Andres Rua.`;
+                const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+                window.open(url, '_blank');
+            });
+        }
+
+        numbersGrid.appendChild(numberElement);
+    }
+
+    // Crear números del 00 al 99
+    for (let i = 0; i < totalNumbers; i++) {
+        createNumberElement(i);
+    }
+</script> -->
+
+<script>
+    // ID de la hoja de cálculo pública
+    const spreadsheetId = '2PACX-1vThTKuJVZAd0rESx4cAIsURTml6ngaRQfqM0DA8Mu47BzNKDisct9N-DEAN--qnzhpT7d6ilPq0Jyrl';
+    // URL del documento publicado como CSV
+    const csvUrl = `https://docs.google.com/spreadsheets/d/e/${spreadsheetId}/pub?output=csv`;
+    
+    // Función para obtener los datos desde la hoja en formato CSV
+    async function obtenerDatosDeLaHoja() {
+        try {
+            const response = await fetch(csvUrl);
+            const data = await response.text();
+            const rows = data.split('\n').slice(1);  // Eliminar la fila de encabezados
+            const numeros = rows.map(row => row.split(','));
+            actualizarNumerosEnLaPagina(numeros);
+        } catch (error) {
+            console.error('Error al obtener datos de la hoja:', error);
+        }
+    }
+    
+    // Función para actualizar los números en la página
+    function actualizarNumerosEnLaPagina(numeros) {
+        const numbersGrid = document.getElementById('numbersGrid');
+        numbersGrid.innerHTML = '';  // Limpiar el contenido anterior
+    
+        numeros.forEach((fila) => {
+            const [numero, vendido] = fila;
+            const numberElement = document.createElement('div');
+            numberElement.classList.add('number');
+            numberElement.textContent = numero.padStart(2, '0');
+    
+            if (vendido.toLowerCase() === 'sí') {
+                numberElement.classList.add('vendido');
+                numberElement.textContent += " - Vendido";
+            } else {
+                numberElement.addEventListener('click', () => {
+                    const whatsappNumber = '573185496440';
+                    const message = `Me gustaría comprar el número ${numero} en la rifa del Xiaomi Redmi Note 13.`;
+                    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+                    window.open(url, '_blank');
+                });
+            }
+    
+            numbersGrid.appendChild(numberElement);
+        });
+    }
+    
+    // Llamar a la función para obtener los datos al cargar la página
+    obtenerDatosDeLaHoja();
+    </script>
+
+</body>
+</html>
