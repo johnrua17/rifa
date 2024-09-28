@@ -40,7 +40,7 @@
             margin-right: 20px;
         }
         .product-image img {
-            max-width: 150px; /* Ajusta el tamaño aquí */
+            max-width: 150px;
             height: auto;
             border-radius: 10px;
         }
@@ -134,7 +134,13 @@
             const response = await fetch(csvUrl);
             const data = await response.text();
             const rows = data.split('\n').slice(1);  // Eliminar la fila de encabezados
-            const numeros = rows.map(row => row.split(','));
+            const numeros = rows.map(row => {
+                const [numero, vendido] = row.split(',');
+                return {
+                    numero: numero.padStart(2, '0'),  // Asegura que el número tenga dos dígitos
+                    vendido: vendido.trim().toLowerCase() === 'si'
+                };
+            });
             actualizarNumerosEnLaPagina(numeros);
         } catch (error) {
             console.error('Error al obtener datos de la hoja:', error);
@@ -146,32 +152,33 @@
         const numbersGrid = document.getElementById('numbersGrid');
         numbersGrid.innerHTML = '';  // Limpiar el contenido anterior
 
-        numeros.forEach((fila) => {
-            const [numero, vendido] = fila;
+        for (let i = 0; i < 100; i++) {
+            const numeroStr = i.toString().padStart(2, '0');
+            const numeroData = numeros.find(n => n.numero === numeroStr) || { numero: numeroStr, vendido: false };
+            
             const numberElement = document.createElement('div');
             numberElement.classList.add('number');
-            numberElement.textContent = numero.padStart(2, '0');
+            numberElement.textContent = numeroStr;
 
-            if (vendido.toLowerCase() === 'sí') {
+            if (numeroData.vendido) {
                 numberElement.classList.add('vendido');
                 numberElement.textContent += " - Vendido";
             } else {
                 numberElement.addEventListener('click', () => {
                     const whatsappNumber = '573185496440';
-                    const message = `Me gustaría comprar el número ${numero} en la rifa del Xiaomi Redmi Note 13.`;
+                    const message = `Me gustaría comprar el número ${numeroStr} en la rifa del Xiaomi Redmi Note 13.`;
                     const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
                     window.open(url, '_blank');
                 });
             }
 
             numbersGrid.appendChild(numberElement);
-        });
+        }
     }
 
     // Llamar a la función para obtener los datos al cargar la página
     obtenerDatosDeLaHoja();
 </script>
-
 
 </body>
 </html>
