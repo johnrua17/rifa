@@ -163,16 +163,17 @@
     
     // Función para obtener los datos desde la hoja en formato CSV
     async function obtenerDatosDeLaHoja() {
-        try {
-            const response = await fetch(csvUrl);
-            const data = await response.text();
-            const rows = data.split('\n').slice(1);  // Eliminar la fila de encabezados
-            const numeros = rows.map(row => row.split(','));
-            actualizarNumerosEnLaPagina(numeros);
-        } catch (error) {
-            console.error('Error al obtener datos de la hoja:', error);
-        }
+    try {
+        const response = await fetch(csvUrl);
+        const data = await response.text();
+        console.log(data);  // Para depuración, verifica los datos que llegan
+        const rows = data.split('\n').slice(1);  // Eliminar la fila de encabezados
+        const numeros = rows.map(row => row.split(','));
+        actualizarNumerosEnLaPagina(numeros);
+    } catch (error) {
+        console.error('Error al obtener datos de la hoja:', error);
     }
+}
     
     // Función para actualizar los números en la página
     function actualizarNumerosEnLaPagina(numeros) {
