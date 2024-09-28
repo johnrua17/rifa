@@ -135,6 +135,7 @@
             const data = await response.text();
             const rows = data.split('\n').slice(1);  // Eliminar la fila de encabezados
             const numeros = rows.map(row => row.split(','));
+            console.log(numeros)
             actualizarNumerosEnLaPagina(numeros);
         } catch (error) {
             console.error('Error al obtener datos de la hoja:', error);
@@ -151,6 +152,7 @@
             const numberElement = document.createElement('div');
             numberElement.classList.add('number');
             numberElement.textContent = numero.padStart(2, '0');
+            
     
             if (vendido.toLowerCase() === 'si') {
                 numberElement.classList.add('vendido');
