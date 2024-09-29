@@ -141,7 +141,7 @@
             const data = await response.text();
             const rows = data.split('\n').slice(1);  // Eliminar la fila de encabezados
             const numeros = rows.map(row => {
-                const [numero, vendido, comprador] = row.split(',');
+                const [numero, vendido, comprador] = row.split(',');  // Agregar la tercera columna
                 return {
                     numero: numero.padStart(2, '0'),  // Asegura que el número tenga dos dígitos
                     vendido: vendido.trim().toLowerCase() === 'si',
@@ -161,7 +161,7 @@
 
         for (let i = 0; i < 100; i++) {
             const numeroStr = i.toString().padStart(2, '0');
-            const numeroData = numeros.find(n => n.numero === numeroStr) || { numero: numeroStr, vendido: false, comprador: ''  };
+            const numeroData = numeros.find(n => n.numero === numeroStr) || { numero: numeroStr, vendido: false, comprador: '' };
             
             const numberElement = document.createElement('div');
             numberElement.classList.add('number');
@@ -169,7 +169,7 @@
 
             if (numeroData.vendido) {
                 numberElement.classList.add('vendido');
-                numberElement.textContent += " - Vendido (${numeroData.comprador})";
+                numberElement.textContent += ` - Vendido (${numeroData.comprador})`;  // Mostrar el nombre del comprador
             } else {
                 numberElement.addEventListener('click', () => {
                     const whatsappNumber = '573185496440';
