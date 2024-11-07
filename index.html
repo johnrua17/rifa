@@ -66,6 +66,23 @@
             background-color: #FF6B6B;
             cursor: not-allowed;
         }
+        .number.pagado {
+            background-color: #FFD700; /* Amarillo dorado para "Pagado" */
+            border: 2px solid #FFD700;
+            position: relative;
+        }
+        .number.pagado::after {
+            content: 'Pagado';
+            color: white;
+            font-size: 0.8em;
+            font-weight: bold;
+            background-color: #333;
+            border-radius: 5px;
+            padding: 2px 5px;
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
         .number:hover:not(.vendido) {
             transform: scale(1.05);
             box-shadow: 0 0 10px rgba(0,0,0,0.2);
@@ -129,9 +146,7 @@
 </footer>
 
 <script>
-    // ID de la hoja de cálculo pública
     const spreadsheetId = '2PACX-1vThTKuJVZAd0rESx4cAIsURTml6ngaRQfqM0DA8Mu47BzNKDisct9N-DEAN--qnzhpT7d6ilPq0Jyrl';
-    // URL del documento publicado como CSV
     const csvUrl = `https://docs.google.com/spreadsheets/d/e/${spreadsheetId}/pub?output=csv`;
 
     // Función para obtener los datos desde la hoja en formato CSV
@@ -141,11 +156,12 @@
             const data = await response.text();
             const rows = data.split('\n').slice(1);  // Eliminar la fila de encabezados
             const numeros = rows.map(row => {
-                const [numero, vendido, comprador] = row.split(',');  // Agregar la tercera columna
+                const [numero, vendido, comprador, pagado] = row.split(',');  // Leer la cuarta columna "pagado"
                 return {
                     numero: numero.padStart(2, '0'),  // Asegura que el número tenga dos dígitos
                     vendido: vendido.trim().toLowerCase() === 'si',
-                    comprador: comprador ? comprador.trim() : ''  // Asegura que no haya errores si no hay comprador
+                    comprador: comprador ? comprador.trim() : '',
+                    pagado: pagado.trim().toLowerCase() === 'si'  // Revisar si está pagado
                 };
             });
             actualizarNumerosEnLaPagina(numeros);
@@ -161,7 +177,7 @@
 
         for (let i = 0; i < 100; i++) {
             const numeroStr = i.toString().padStart(2, '0');
-            const numeroData = numeros.find(n => n.numero === numeroStr) || { numero: numeroStr, vendido: false, comprador: '' };
+            const numeroData = numeros.find(n => n.numero === numeroStr) || { numero: numeroStr, vendido: false, pagado: false, comprador: '' };
             
             const numberElement = document.createElement('div');
             numberElement.classList.add('number');
@@ -169,7 +185,7 @@
 
             if (numeroData.vendido) {
                 numberElement.classList.add('vendido');
-                numberElement.textContent += ` - Vendido (${numeroData.comprador})`;  // Mostrar el nombre del comprador
+                numberElement.textContent += ` - Vendido (${numeroData.comprador})`;
             } else {
                 numberElement.addEventListener('click', () => {
                     const whatsappNumber = '573185496440';
@@ -179,6 +195,11 @@
                 });
             }
 
+            // Agregar clase "pagado" si el número está pagado
+            if (numeroData.pagado) {
+                numberElement.classList.add('pagado');
+            }
+
             numbersGrid.appendChild(numberElement);
         }
     }
@@ -186,6 +207,7 @@
     // Llamar a la función para obtener los datos al cargar la página
     obtenerDatosDeLaHoja();
 </script>
+
 
 </body>
 </html>
