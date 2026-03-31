@@ -111,40 +111,66 @@
 </header>
 
 <div class="container">
-    <div class="product-info">
+    <!-- <div class="product-info">
         <div class="product-image">
             <img src="./xiaomi.jpg" alt="Xiaomi Redmi Note 13 5G">
         </div>
         <div class="product-details">
             <h2>¡La Rifa Ha Finalizado!</h2>
-            <p>El número ganador fue el <strong>77</strong>. ¡Felicidades a Jonathan Rodriguez!</p>
+            <p>El número ganador fue el <strong>77</strong>. ¡Felicidades a !</p>
             <p>Gracias a todos por participar y apoyar nuestra causa. Esperamos contar con su apoyo en futuras rifas y proyectos.</p>
         </div>
-    </div>
+    </div> -->
 
-    <div class="description">
+    <!-- <div class="description">
         <h2>Detalles del Ganador</h2>
-        <p><strong>Nombre:</strong> Jonathan Rodriguez</p>
+        <p><strong>Nombre:</strong></p>
         <p><strong>Número Ganador:</strong> 77</p>
-        <p><strong>Ciudad:</strong> Barbacoas, Nariño</p>
+        <p><strong>Ciudad:</strong></p>
     </div>
-   
+    -->
     <h2>Números de la Rifa</h2>
     <div class="numbers-grid" id="numbersGrid"></div>
 </div>
 
 <footer>
-    <p>Responsable: John Andres Rua y Yulieth Rua</p>
+    <p>Responsable: Sara Rodriguez/p>
 </footer>
 
 <script>
     const spreadsheetId = '2PACX-1vThTKuJVZAd0rESx4cAIsURTml6ngaRQfqM0DA8Mu47BzNKDisct9N-DEAN--qnzhpT7d6ilPq0Jyrl';
     const csvUrl = `https://docs.google.com/spreadsheets/d/e/${spreadsheetId}/pub?output=csv`;
 
+    // GID de la Hoja 3 — encuéntralo abriendo la hoja 3 en el navegador y
+    // copiando el valor de #gid=XXXXXXX que aparece al final de la URL.
+    const ganadorGid = '1829464852';
+    const ganadorUrl = `https://docs.google.com/spreadsheets/d/e/${spreadsheetId}/pub?output=csv&gid=${ganadorGid}`;
+
+    // Obtiene el número ganador desde la Hoja 3 (primera celda con contenido)
+    async function obtenerNumeroGanador() {
+        try {
+            const response = await fetch(ganadorUrl);
+            const data = await response.text();
+            const rows = data.split('\n');
+            for (const row of rows) {
+                const valor = row.split(',')[0].trim();
+                if (valor && !isNaN(parseInt(valor))) {
+                    return valor.padStart(2, '0');
+                }
+            }
+        } catch (error) {
+            console.error('Error al obtener el número ganador:', error);
+        }
+        return null;
+    }
+
     // Función para obtener los datos desde la hoja en formato CSV
     async function obtenerDatosDeLaHoja() {
         try {
-            const response = await fetch(csvUrl);
+            const [response, numeroGanador] = await Promise.all([
+                fetch(csvUrl),
+                obtenerNumeroGanador()
+            ]);
             const data = await response.text();
             const rows = data.split('\n').slice(1);
             const numeros = rows.map(row => {
@@ -156,14 +182,14 @@
                     pagado: pagado.trim().toLowerCase() === 'si'
                 };
             });
-            actualizarNumerosEnLaPagina(numeros);
+            actualizarNumerosEnLaPagina(numeros, numeroGanador);
         } catch (error) {
             console.error('Error al obtener datos de la hoja:', error);
         }
     }
 
     // Función para actualizar los números en la página
-    function actualizarNumerosEnLaPagina(numeros) {
+    function actualizarNumerosEnLaPagina(numeros, numeroGanador) {
         const numbersGrid = document.getElementById('numbersGrid');
         numbersGrid.innerHTML = '';
 
@@ -175,7 +201,7 @@
             numberElement.classList.add('number');
             numberElement.textContent = numeroStr;
 
-            if (numeroStr === '77') {
+            if (numeroGanador && numeroStr === numeroGanador) {
                 numberElement.classList.add('ganador');
                 numberElement.textContent += ' - ¡Ganador!';
             } else if (numeroData.vendido) {
