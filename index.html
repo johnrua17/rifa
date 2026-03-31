@@ -202,6 +202,54 @@
             border-left: 5px solid var(--purple-main);
         }
 
+        .info-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 24px;
+        }
+        .info-card {
+            flex: 1;
+            min-width: 200px;
+            background: var(--purple-pale);
+            border-radius: 12px;
+            padding: 18px 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .info-card .card-icon {
+            font-size: 1.8rem;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        .info-card .card-body {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .info-card .card-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--purple-main);
+        }
+        .info-card .card-value {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        .info-card .card-sub {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 2px;
+        }
+        .info-card.highlight {
+            background: #fffbea;
+        }
+        .info-card.highlight .card-label { color: #b07d00; }
+
         footer {
             margin: 10px 0 30px;
             text-align: center;
@@ -235,6 +283,32 @@
     </div>
 
     <div class="numbers-grid" id="numbersGrid"></div>
+
+    <div class="info-cards">
+        <div class="info-card highlight">
+            <div class="card-icon">🎟️</div>
+            <div class="card-body">
+                <span class="card-label">Valor de la boleta</span>
+                <span class="card-value">$20.000 COP</span>
+            </div>
+        </div>
+        <div class="info-card">
+            <div class="card-icon">📱</div>
+            <div class="card-body">
+                <span class="card-label">Pago por Nequi</span>
+                <span class="card-value">317 7541768</span>
+                <span class="card-sub">Consignar al número indicado</span>
+            </div>
+        </div>
+        <div class="info-card">
+            <div class="card-icon">📅</div>
+            <div class="card-body">
+                <span class="card-label">Fecha del sorteo</span>
+                <span class="card-value">Domingo 5 de abril · 8:00 PM</span>
+                <span class="card-sub">Lotería del Cafetero</span>
+            </div>
+        </div>
+    </div>
 </div>
 
 <footer>
