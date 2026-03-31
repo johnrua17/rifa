@@ -4,137 +4,241 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rifa Xiaomi Redmi Note 13</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --purple-dark:  #4a0080;
+            --purple-main:  #7b2fe0;
+            --purple-light: #b56aff;
+            --purple-pale:  #f3e8ff;
+            --gold:         #ffd700;
+            --red:          #e85d5d;
+            --green:        #22c55e;
+            --text-dark:    #1e0033;
+        }
+
+        * { box-sizing: border-box; }
+
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f0f0;
+            background: linear-gradient(135deg, #1a0030 0%, #3b0075 60%, #6a1fa8 100%);
+            min-height: 100vh;
             color: #333;
         }
+
         header {
-            background-color: #6bffe1;
+            background: linear-gradient(90deg, var(--purple-dark), var(--purple-main), var(--purple-light));
             color: white;
-            padding: 20px;
+            padding: 36px 20px 28px;
             text-align: center;
+            box-shadow: 0 4px 24px rgba(123,47,224,0.5);
+            position: relative;
+            overflow: hidden;
         }
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
-        h1, h2 {
-            color: #333;
+        header h1 {
+            margin: 0;
+            font-size: clamp(1.6rem, 5vw, 2.8rem);
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+            position: relative;
         }
-        .product-info {
+        header p.subtitle {
+            margin: 8px 0 0;
+            font-size: 1rem;
+            opacity: 0.85;
+            position: relative;
+        }
+
+        .prize-banner {
             display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 30px;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: linear-gradient(90deg, #ffd700, #ffaa00, #ffd700);
+            color: #1e0033;
+            font-weight: 800;
+            font-size: clamp(1rem, 3vw, 1.4rem);
+            padding: 12px 24px;
+            text-align: center;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 10px rgba(255,170,0,0.4);
         }
-        .product-image {
-            flex: 1;
-            margin-right: 20px;
+        .prize-banner span.icon { font-size: 1.5em; }
+
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 28px;
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 40px rgba(74,0,128,0.35);
         }
-        .product-image img {
-            max-width: 150px;
-            height: auto;
-            border-radius: 10px;
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--purple-dark);
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--purple-pale);
         }
-        .product-details {
-            flex: 1;
-            text-align: left;
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 22px;
+            background: linear-gradient(180deg, var(--purple-main), var(--purple-light));
+            border-radius: 3px;
         }
+
+        /* Legend */
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #555;
+        }
+        .legend-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+        .legend-dot.libre   { background: var(--purple-light); }
+        .legend-dot.vendido { background: var(--red); }
+        .legend-dot.pagado  { background: var(--gold); }
+        .legend-dot.ganador { background: var(--green); }
+
+        /* Numbers grid */
         .numbers-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
             gap: 10px;
         }
+
         .number {
-            padding: 15px;
-            background-color: #4ECDC4;
+            padding: 14px 8px;
+            background: linear-gradient(135deg, var(--purple-main), var(--purple-light));
             color: white;
-            border-radius: 5px;
+            border-radius: 10px;
             cursor: default;
-            font-weight: bold;
+            font-weight: 700;
+            font-size: 1rem;
+            text-align: center;
+            transition: transform 0.15s, box-shadow 0.15s;
+            box-shadow: 0 3px 8px rgba(123,47,224,0.25);
         }
+        .number:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(123,47,224,0.35);
+        }
+
         .number.vendido {
-            background-color: #FF6B6B;
+            background: linear-gradient(135deg, #e85d5d, #ff9090);
+            box-shadow: 0 3px 8px rgba(232,93,93,0.3);
         }
+
         .number.pagado {
-            background-color: #FFD700;
-            border: 2px solid #FFD700;
+            background: linear-gradient(135deg, #d4a800, #ffd700);
+            color: #1e0033;
+            box-shadow: 0 3px 8px rgba(212,168,0,0.35);
             position: relative;
         }
         .number.pagado::after {
-            content: 'Pagado';
+            content: '✓ Pagado';
             color: white;
-            font-size: 0.8em;
-            font-weight: bold;
-            background-color: #333;
-            border-radius: 5px;
+            font-size: 0.65em;
+            font-weight: 700;
+            background-color: var(--purple-dark);
+            border-radius: 4px;
             padding: 2px 5px;
             position: absolute;
-            top: -5px;
+            top: -8px;
             right: -5px;
         }
+
         .number.ganador {
-            background-color: #4CAF50; /* Verde para el número ganador */
+            background: linear-gradient(135deg, #16a34a, #22c55e);
             color: white;
-            font-weight: bold;
-            animation: blink 1s infinite alternate;
+            box-shadow: 0 0 20px rgba(34,197,94,0.6);
+            animation: pulse 1.2s infinite alternate;
+            position: relative;
         }
-        @keyframes blink {
-            0% { opacity: 1; }
-            100% { opacity: 0.5; }
+        .number.ganador::before {
+            content: '🏆';
+            display: block;
+            font-size: 1.1em;
+            margin-bottom: 2px;
         }
+        @keyframes pulse {
+            0%   { box-shadow: 0 0 10px rgba(34,197,94,0.5); transform: scale(1); }
+            100% { box-shadow: 0 0 28px rgba(34,197,94,0.9); transform: scale(1.06); }
+        }
+
         .description {
-            background-color: #f9f9f9;
+            background-color: var(--purple-pale);
             padding: 20px;
-            margin-top: 20px;
-            border-radius: 5px;
+            margin-top: 24px;
+            border-radius: 10px;
+            border-left: 5px solid var(--purple-main);
         }
+
         footer {
-            margin-top: 20px;
+            margin: 10px 0 30px;
             text-align: center;
-            color: #666;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.88rem;
         }
+        footer strong { color: var(--gold); }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Rifa Xiaomi Redmi Note 13 5G</h1>
+    <h1>🎟️ Rifa 1 Millón de Pesos</h1>
+    <p class="subtitle">¡Participa y gana el premio mayor!</p>
 </header>
 
-<div class="container">
-    <!-- <div class="product-info">
-        <div class="product-image">
-            <img src="./xiaomi.jpg" alt="Xiaomi Redmi Note 13 5G">
-        </div>
-        <div class="product-details">
-            <h2>¡La Rifa Ha Finalizado!</h2>
-            <p>El número ganador fue el <strong>77</strong>. ¡Felicidades a !</p>
-            <p>Gracias a todos por participar y apoyar nuestra causa. Esperamos contar con su apoyo en futuras rifas y proyectos.</p>
-        </div>
-    </div> -->
+<div class="prize-banner">
+    <span class="icon">💰</span>
+    PREMIO: <strong>$1.000.000 COP</strong>
+    <span class="icon">💰</span>
+</div>
 
-    <!-- <div class="description">
-        <h2>Detalles del Ganador</h2>
-        <p><strong>Nombre:</strong></p>
-        <p><strong>Número Ganador:</strong> 77</p>
-        <p><strong>Ciudad:</strong></p>
+<div class="container">
+    <div class="section-title">Números de la Rifa</div>
+
+    <div class="legend">
+        <div class="legend-item"><div class="legend-dot libre"></div> Disponible</div>
+        <div class="legend-item"><div class="legend-dot vendido"></div> Vendido</div>
+        <div class="legend-item"><div class="legend-dot pagado"></div> Pagado</div>
+        <div class="legend-item"><div class="legend-dot ganador"></div> Ganador</div>
     </div>
-    -->
-    <h2>Números de la Rifa</h2>
+
     <div class="numbers-grid" id="numbersGrid"></div>
 </div>
 
 <footer>
-    <p>Responsable: Sara Rodriguez/p>
+    <p>Responsable: Sara Rodriguez </p>
 </footer>
 
 <script>
