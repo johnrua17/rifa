@@ -250,6 +250,32 @@
         }
         .info-card.highlight .card-label { color: #b07d00; }
 
+        .winner-banner {
+            display: none;
+            background: linear-gradient(90deg, #16a34a, #22c55e, #16a34a);
+            color: white;
+            text-align: center;
+            padding: 18px 24px;
+            font-size: clamp(1.1rem, 3.5vw, 1.6rem);
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 20px rgba(34,197,94,0.5);
+            animation: pulse-banner 1.2s infinite alternate;
+        }
+        @keyframes pulse-banner {
+            0%   { box-shadow: 0 4px 20px rgba(34,197,94,0.4); }
+            100% { box-shadow: 0 4px 36px rgba(34,197,94,0.85); }
+        }
+        .winner-banner .winner-num {
+            display: inline-block;
+            background: white;
+            color: #16a34a;
+            border-radius: 10px;
+            padding: 2px 16px;
+            margin: 0 8px;
+            font-size: 1.3em;
+        }
+
         footer {
             margin: 10px 0 30px;
             text-align: center;
@@ -270,6 +296,10 @@
     <span class="icon">💰</span>
     PREMIO: <strong>$1.000.000 COP</strong>
     <span class="icon">💰</span>
+</div>
+
+<div class="winner-banner" id="winnerBanner">
+    🏆 ¡TENEMOS GANADOR! — Número <span class="winner-num" id="winnerNum"></span> — ¡Felicitaciones! 🏆
 </div>
 
 <div class="container">
@@ -366,8 +396,17 @@
         }
     }
 
+    // Muestra el banner ganador en la parte superior
+    function mostrarBannerGanador(numeroGanador) {
+        if (!numeroGanador) return;
+        const banner = document.getElementById('winnerBanner');
+        document.getElementById('winnerNum').textContent = numeroGanador;
+        banner.style.display = 'block';
+    }
+
     // Función para actualizar los números en la página
     function actualizarNumerosEnLaPagina(numeros, numeroGanador) {
+        mostrarBannerGanador(numeroGanador);
         const numbersGrid = document.getElementById('numbersGrid');
         numbersGrid.innerHTML = '';
 
