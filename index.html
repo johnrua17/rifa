@@ -299,7 +299,7 @@
 </div>
 
 <div class="winner-banner" id="winnerBanner">
-    🏆 ¡TENEMOS GANADOR! — Número <span class="winner-num" id="winnerNum"></span> — ¡Felicitaciones! 🏆
+    🏆 ¡TENEMOS GANADOR! — Número <span class="winner-num" id="winnerNum"></span><span id="winnerName"></span> — ¡Felicitaciones! 🏆
 </div>
 
 <div class="container">
@@ -397,16 +397,20 @@
     }
 
     // Muestra el banner ganador en la parte superior
-    function mostrarBannerGanador(numeroGanador) {
+    function mostrarBannerGanador(numeroGanador, nombreGanador) {
         if (!numeroGanador) return;
         const banner = document.getElementById('winnerBanner');
         document.getElementById('winnerNum').textContent = numeroGanador;
+        const nameEl = document.getElementById('winnerName');
+        nameEl.textContent = nombreGanador ? ` — ${nombreGanador}` : '';
         banner.style.display = 'block';
     }
 
     // Función para actualizar los números en la página
     function actualizarNumerosEnLaPagina(numeros, numeroGanador) {
-        mostrarBannerGanador(numeroGanador);
+        const ganadorData = numeros.find(n => n.numero === numeroGanador);
+        const nombreGanador = ganadorData ? ganadorData.comprador : '';
+        mostrarBannerGanador(numeroGanador, nombreGanador);
         const numbersGrid = document.getElementById('numbersGrid');
         numbersGrid.innerHTML = '';
 
